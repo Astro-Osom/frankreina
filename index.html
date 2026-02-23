@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Frank Reina — Writer. Filmmaker. Creator of Future Vibrant Self.</title>
-  <meta name="description" content="Frank Reina is a storyteller and filmmaker. Your value is your story.">
+  <meta name="description" content="Frank Reina is a storyteller and filmmaker. Self-transformation through storytelling.">
   <meta property="og:title" content="Frank Reina">
   <meta property="og:description" content="Writer. Filmmaker. Creator of Future Vibrant Self.">
   <meta property="og:type" content="website">
@@ -38,7 +38,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
+    /* ═══ NAV ═══ */
     nav {
       position: fixed;
       top: 0;
@@ -50,7 +50,7 @@
       border-bottom: 1px solid var(--bronze-faint);
     }
 
-    nav .nav-inner {
+    .nav-inner {
       max-width: 1100px;
       margin: 0 auto;
       padding: 1rem 2rem;
@@ -59,7 +59,7 @@
       align-items: center;
     }
 
-    nav .nav-logo {
+    .nav-logo {
       font-family: var(--serif);
       font-size: 1.2rem;
       font-weight: 500;
@@ -68,13 +68,13 @@
       letter-spacing: 0.02em;
     }
 
-    nav .nav-links {
+    .nav-links {
       display: flex;
       gap: 2rem;
       list-style: none;
     }
 
-    nav .nav-links a {
+    .nav-links a {
       font-size: 0.85rem;
       font-weight: 400;
       letter-spacing: 0.08em;
@@ -84,7 +84,7 @@
       transition: color 0.2s;
     }
 
-    nav .nav-links a:hover { color: var(--bronze); }
+    .nav-links a:hover { color: var(--bronze); }
 
     .hamburger {
       display: none;
@@ -103,7 +103,7 @@
       transition: all 0.3s;
     }
 
-    /* ── HERO VIDEO ── */
+    /* ═══ HERO ═══ */
     .hero {
       position: relative;
       width: 100%;
@@ -112,34 +112,38 @@
       background: #0a0a0a;
     }
 
-    .hero-video-bg {
+    /* YouTube background container */
+    .hero-video-wrap {
       position: absolute;
       inset: 0;
       z-index: 1;
-      pointer-events: none;
       overflow: hidden;
+      pointer-events: none;
     }
 
-    .hero-video-bg iframe {
+    .hero-video-wrap iframe {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 120vw;
-      height: 120vh;
-      min-width: 120%;
-      min-height: 120%;
+      width: 177.78vh; /* 16:9 */
+      height: 100vh;
+      min-width: 100%;
+      min-height: 56.25vw;
       transform: translate(-50%, -50%);
-      pointer-events: none;
     }
 
-    .hero-video-bg::after {
-      content: '';
+    /* Dark overlay — fades out when playing */
+    .hero-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(10, 10, 10, 0.45);
       z-index: 2;
+      background: rgba(10, 10, 10, 0.50);
+      transition: opacity 0.6s ease;
     }
 
+    .hero.playing .hero-overlay { opacity: 0; pointer-events: none; }
+
+    /* Poster fallback */
     .hero-poster {
       position: absolute;
       inset: 0;
@@ -147,171 +151,87 @@
       background: url('https://img.youtube.com/vi/IYzPYD2eQQg/maxresdefault.jpg') center/cover no-repeat;
     }
 
+    /* Content overlay */
     .hero-content {
-      position: relative;
+      position: absolute;
+      inset: 0;
       z-index: 10;
-      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      color: #f0ede6;
+      transition: opacity 0.6s ease;
     }
 
-    .hero-photo {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center top;
-      margin-bottom: 2rem;
-      border: 2px solid rgba(196, 180, 154, 0.6);
-      filter: grayscale(10%);
-    }
+    .hero.playing .hero-content { opacity: 0; pointer-events: none; }
 
-    .hero-content h1 {
+    .hero-headline {
       font-family: var(--serif);
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 300;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin-bottom: 0.8rem;
-      color: #f0ede6;
-    }
-
-    .hero-content .tagline {
-      font-family: var(--serif);
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
       font-weight: 300;
       font-style: italic;
-      color: var(--bronze-light);
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-content .descriptor {
-      font-size: 0.85rem;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(240, 237, 230, 0.7);
+      color: #f0ede6;
+      line-height: 1.35;
       margin-bottom: 2.5rem;
+      max-width: 600px;
+      letter-spacing: 0.01em;
     }
 
-    .play-film-btn {
+    .play-me-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.7rem;
-      padding: 0.9rem 2rem;
+      padding: 0.9rem 2.2rem;
       font-family: var(--sans);
       font-size: 0.85rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #f0ede6;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(196, 180, 154, 0.5);
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s;
-      text-decoration: none;
     }
 
-    .play-film-btn:hover {
+    .play-me-btn:hover {
       background: rgba(255, 255, 255, 0.18);
       border-color: var(--bronze-light);
     }
 
-    .play-film-btn svg {
-      width: 16px;
-      height: 16px;
-      fill: #f0ede6;
-    }
+    .play-me-btn svg { width: 14px; height: 14px; fill: #f0ede6; }
 
-    /* Video Modal */
-    .video-modal {
+    /* Close/unmute toggle */
+    .hero-close {
+      position: absolute;
+      top: 5rem;
+      right: 2rem;
+      z-index: 20;
       display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.92);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      transition: background 0.2s;
     }
 
-    .video-modal.open { display: flex; }
+    .hero-close:hover { background: rgba(0,0,0,0.7); }
+    .hero.playing .hero-close { display: flex; }
 
-    .video-modal-inner {
-      position: relative;
-      width: 100%;
-      max-width: 960px;
-      aspect-ratio: 16/9;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .video-modal-inner iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .video-modal-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.8rem;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-    }
-
-    .video-modal-close:hover { opacity: 1; }
-
-    /* ── MANIFESTO (below hero) ── */
-    .manifesto {
-      background: var(--cream);
-      text-align: center;
-      padding: 5rem 2rem;
-    }
-
-    .manifesto-text {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.4;
-      color: var(--text);
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .manifesto-line {
-      width: 60px;
-      height: 1px;
-      background: var(--bronze);
-      margin: 2rem auto 0;
-    }
-
-    /* ── SECTIONS ── */
+    /* ═══ SECTIONS ═══ */
     section { padding: 6rem 2rem; }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .container-wide {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .container-wide { max-width: 1100px; margin: 0 auto; }
 
     .section-label {
       font-size: 0.75rem;
@@ -329,7 +249,7 @@
       margin-bottom: 2rem;
     }
 
-    /* ── BIO ── */
+    /* ═══ BIO ═══ */
     .bio { background: var(--cream); }
 
     .bio-text {
@@ -340,13 +260,20 @@
       max-width: 750px;
     }
 
-    .bio-text em { font-style: italic; }
-
-    .bio-full {
-      display: none;
-      margin-top: 1.5rem;
+    .bio-text a.inline-link {
+      color: var(--bronze);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--bronze-light);
+      transition: color 0.2s, text-decoration-color 0.2s;
     }
 
+    .bio-text a.inline-link:hover {
+      color: var(--text);
+      text-decoration-color: var(--text);
+    }
+
+    .bio-full { display: none; margin-top: 1.5rem; }
     .bio-full.open { display: block; }
 
     .read-more-btn {
@@ -381,49 +308,66 @@
 
     .imdb-link:hover { color: var(--text); }
 
-    /* ── FILMS ── */
-    .films { background: var(--warm-white); }
+    .bio-headshot {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      margin-top: 3rem;
+      border: 3px solid var(--bronze-faint);
+      filter: grayscale(10%);
+    }
 
-    .films-grid {
+    /* ═══ TILE GRID (shared by Films + Read) ═══ */
+    .tile-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+      gap: 1.2rem;
       margin-top: 1rem;
     }
 
-    .film-card {
-      position: relative;
+    .tile-card {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
       border-radius: 6px;
       overflow: hidden;
       background: var(--cream);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-      color: var(--text);
-      display: block;
+      border: 1px solid var(--bronze-faint);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
 
-    .film-card:hover {
+    .tile-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.15);
+      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.12);
+      border-color: var(--bronze-light);
     }
 
-    .film-thumb {
+    .tile-img {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 16/10;
       object-fit: cover;
       display: block;
       transition: filter 0.3s;
     }
 
-    .film-card:hover .film-thumb { filter: brightness(1.05); }
+    .tile-card:hover .tile-img { filter: brightness(1.05); }
 
-    .film-card .film-play {
+    .tile-body { padding: 0.7rem 0.9rem; }
+
+    /* Film-specific */
+    .films-section { background: var(--warm-white); }
+
+    .film-tile { position: relative; }
+
+    .film-tile .tile-play {
       position: absolute;
-      top: 50%;
+      top: 42%;
       left: 50%;
-      transform: translate(-50%, -60%);
-      width: 34px;
-      height: 34px;
+      transform: translate(-50%, -50%);
+      width: 36px;
+      height: 36px;
       background: rgba(255, 255, 255, 0.9);
       border-radius: 50%;
       display: flex;
@@ -433,92 +377,41 @@
       transition: opacity 0.3s;
     }
 
-    .film-card:hover .film-play { opacity: 1; }
+    .film-tile:hover .tile-play { opacity: 1; }
+    .tile-play svg { width: 13px; height: 13px; fill: var(--text); margin-left: 2px; }
 
-    .film-play svg { width: 12px; height: 12px; fill: var(--text); margin-left: 2px; }
-
-    .film-info { padding: 0.5rem 0.7rem; }
-
-    .film-title {
+    .tile-title {
       font-family: var(--serif);
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    /* ── READ (Articles) ── */
-    .articles { background: var(--cream); }
-
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.2rem;
-      margin-top: 1rem;
-    }
-
-    .article-card {
-      display: block;
-      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
       color: var(--text);
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--warm-white);
-      border: 1px solid var(--bronze-faint);
-      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      line-height: 1.3;
     }
 
-    .article-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.12);
-      border-color: var(--bronze-light);
-    }
-
-    .article-img {
-      width: 100%;
-      aspect-ratio: 16/10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--serif);
-      font-size: 2rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.8);
-    }
-
-    .article-body {
-      padding: 1rem;
-    }
+    /* Article-specific */
+    .articles-section { background: var(--cream); }
 
     .article-pub {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--bronze);
-      margin-bottom: 0.4rem;
-    }
-
-    .article-title {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 500;
-      line-height: 1.35;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .article-excerpt {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-light);
       line-height: 1.5;
+      margin-top: 0.3rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    .load-more-wrap {
-      text-align: center;
-      margin-top: 2.5rem;
-    }
+    .load-more-wrap { text-align: center; margin-top: 2.5rem; }
 
     .load-more {
       font-family: var(--sans);
@@ -528,96 +421,24 @@
       text-transform: uppercase;
       color: var(--bronze);
       text-decoration: none;
-      cursor: pointer;
-      border: none;
-      background: none;
       transition: color 0.2s;
     }
 
     .load-more:hover { color: var(--text); }
 
-    /* ── PROJECTS ── */
-    .projects { background: var(--warm-white); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 1rem;
-    }
-
-    .project-card {
-      display: block;
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--cream);
-      border: 1px solid var(--bronze-faint);
-      text-decoration: none;
-      color: var(--text);
-      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.12);
-      border-color: var(--bronze-light);
-    }
-
-    .project-card-img {
-      width: 100%;
-      aspect-ratio: 16/10;
-      object-fit: cover;
-      display: block;
-    }
-
-    .project-card-body {
-      padding: 1.5rem 1.8rem;
-    }
-
-    .project-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--bronze);
-      margin-bottom: 0.6rem;
-    }
-
-    .project-card-body h3 {
-      font-family: var(--serif);
-      font-size: 1.4rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-card-body p {
-      font-size: 0.9rem;
-      color: var(--text-light);
-      line-height: 1.6;
-    }
-
-    /* ── DIGITAL FOOTPRINTS ── */
-    .footprints { background: var(--cream); }
+    /* ═══ DIGITAL FOOTPRINTS ═══ */
+    .footprints { background: var(--warm-white); }
 
     .footprints-featured {
       margin-top: 1rem;
       border-radius: 8px;
       overflow: hidden;
       aspect-ratio: 16/9;
-      max-width: 100%;
     }
 
-    .footprints-featured iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    .footprints-featured iframe { width: 100%; height: 100%; border: none; }
 
-    .footprints-playlist {
-      margin-top: 1.5rem;
-      text-align: center;
-    }
+    .footprints-playlist { margin-top: 1.5rem; text-align: center; }
 
     .footprints-playlist a {
       display: inline-flex;
@@ -634,52 +455,8 @@
 
     .footprints-playlist a:hover { color: var(--text); }
 
-    /* ── WRITING (Substack) ── */
-    .writing { background: var(--warm-white); }
-
-    .writing-link {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--bronze-faint);
-      border-top: 1px solid var(--bronze-faint);
-      text-decoration: none;
-      color: var(--text);
-      transition: color 0.2s;
-    }
-
-    .writing-link:hover { color: var(--bronze); }
-
-    .writing-link .arrow {
-      margin-left: auto;
-      font-size: 1.2rem;
-      color: var(--bronze-light);
-      transition: transform 0.2s, color 0.2s;
-    }
-
-    .writing-link:hover .arrow {
-      transform: translateX(4px);
-      color: var(--bronze);
-    }
-
-    .writing-link h3 {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 500;
-    }
-
-    .writing-link p {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-top: 0.2rem;
-    }
-
-    /* ── SIGNUP ── */
-    .signup {
-      background: var(--cream);
-      text-align: center;
-    }
+    /* ═══ SIGNUP ═══ */
+    .signup { background: var(--cream); text-align: center; }
 
     .signup h2 {
       font-family: var(--serif);
@@ -740,7 +517,7 @@
 
     .signup-form button:hover { background: var(--bronze); }
 
-    /* ── FOOTER ── */
+    /* ═══ FOOTER ═══ */
     footer {
       padding: 4rem 2rem 3rem;
       background: var(--warm-white);
@@ -764,16 +541,9 @@
       margin-bottom: 0.5rem;
     }
 
-    .footer-brand p {
-      font-size: 0.85rem;
-      color: var(--text-light);
-    }
+    .footer-brand p { font-size: 0.85rem; color: var(--text-light); }
 
-    .footer-sites {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    .footer-sites { display: flex; flex-direction: column; gap: 0.5rem; }
 
     .footer-sites a {
       font-size: 0.85rem;
@@ -784,17 +554,9 @@
 
     .footer-sites a:hover { color: var(--bronze); }
 
-    .footer-socials {
-      display: flex;
-      gap: 1.2rem;
-      align-items: center;
-    }
+    .footer-socials { display: flex; gap: 1.2rem; align-items: center; }
 
-    .footer-socials a {
-      color: var(--text-light);
-      transition: color 0.2s;
-    }
-
+    .footer-socials a { color: var(--text-light); transition: color 0.2s; }
     .footer-socials a:hover { color: var(--bronze); }
     .footer-socials svg { width: 20px; height: 20px; }
 
@@ -808,11 +570,11 @@
       text-align: center;
     }
 
-    /* ── RESPONSIVE ── */
+    /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .hamburger { display: flex; }
 
-      nav .nav-links {
+      .nav-links {
         display: none;
         position: absolute;
         top: 100%;
@@ -826,16 +588,12 @@
         border-bottom: 1px solid var(--bronze-faint);
       }
 
-      nav .nav-links.open { display: flex; }
+      .nav-links.open { display: flex; }
 
-      .hero { height: 85vh; }
-      .hero-photo { width: 110px; height: 110px; }
-
+      .hero { height: 80vh; }
       section { padding: 4rem 1.5rem; }
 
-      .films-grid { grid-template-columns: repeat(2, 1fr); }
-      .articles-grid { grid-template-columns: repeat(2, 1fr); }
-      .projects-grid { grid-template-columns: 1fr; }
+      .tile-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
       .form-row { flex-direction: column; }
 
       .footer-inner { flex-direction: column; text-align: center; align-items: center; }
@@ -843,21 +601,18 @@
     }
 
     @media (max-width: 480px) {
-      .films-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-      .articles-grid { grid-template-columns: 1fr; }
+      .tile-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+      .tile-title { font-size: 0.85rem; }
     }
 
-    /* ── FADE IN ── */
+    /* ═══ FADE IN ═══ */
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
@@ -871,49 +626,28 @@
       </button>
       <ul class="nav-links">
         <li><a href="#bio">Biography</a></li>
-        <li><a href="#films">Films</a></li>
+        <li><a href="#films">Short Films</a></li>
         <li><a href="#read">Read</a></li>
-        <li><a href="#projects">Projects</a></li>
         <li><a href="#footprints">Digital Footprints</a></li>
         <li><a href="#connect">Connect</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- ════ HERO (Video Background) ════ -->
-  <section class="hero">
-    <!-- Poster fallback -->
+  <!-- ════ HERO ════ -->
+  <section class="hero" id="heroSection">
     <div class="hero-poster"></div>
-    <!-- YouTube background (muted autoplay loop) -->
-    <div class="hero-video-bg" id="heroBg"></div>
-    <!-- Overlay content -->
+    <div class="hero-video-wrap" id="heroVideoWrap"></div>
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <img src="Headshot.jpg" alt="Frank Reina" class="hero-photo" onerror="this.style.display='none'">
-      <h1>Frank Reina</h1>
-      <p class="tagline">Your value is your story</p>
-      <p class="descriptor">Writer &middot; Filmmaker &middot; Creator of Future Vibrant Self</p>
-      <button class="play-film-btn" onclick="openVideoModal()">
+      <p class="hero-headline">Self-transformation through storytelling</p>
+      <button class="play-me-btn" onclick="playHeroAudio()">
         <svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg>
-        Play Film
+        Play me
       </button>
     </div>
+    <button class="hero-close" onclick="muteHero()" aria-label="Close">&times;</button>
   </section>
-
-  <!-- Video Modal -->
-  <div class="video-modal" id="videoModal" onclick="closeVideoModal(event)">
-    <div class="video-modal-inner">
-      <button class="video-modal-close" onclick="closeVideoModal()">&times;</button>
-      <div id="modalPlayer"></div>
-    </div>
-  </div>
-
-  <!-- ════ MANIFESTO ════ -->
-  <div class="manifesto">
-    <div class="fade-in">
-      <p class="manifesto-text">Self-transformation through storytelling</p>
-      <div class="manifesto-line"></div>
-    </div>
-  </div>
 
   <!-- ════ BIO ════ -->
   <section class="bio" id="bio">
@@ -921,14 +655,14 @@
       <p class="section-label">Biography</p>
       <div class="section-divider"></div>
       <div class="bio-text">
-        <p>I am a filmmaker and storyteller residing in Los Angeles.</p>
+        <p>I am a filmmaker and storyteller residing in Los Angeles. A man of Cuban blood and Puerto Rican soil. </p>
 
         <p style="margin-top:1.2rem;">I spent my early years in San Juan, Puerto Rico, and my professional years in the trenches of Hollywood. I've been a talent agent and a production assistant on two Christopher Nolan movies (<em>The Dark Knight Rises</em>, <em>Interstellar</em>), worked under legendary producer Robert Evans (<em>Chinatown</em>), and served as the right-hand man to action director Spiro Razatos (maestro of the physics-defying car chases for the <em>Fast &amp; Furious</em> franchise).</p>
 
         <div class="bio-full" id="bioFull">
           <p style="margin-top:1.2rem;">My name is on the credits of movies like <em>Captain America: Civil War</em>, <em>Venom</em>, and the Coen Bros all-star movie <em>Hail, Caesar!</em></p>
 
-          <p style="margin-top:1.2rem;">I make movies (like my feature, <em>Scrambled</em>), I write, and I lead initiation rituals for men. My current focus is Future Vibrant Self &mdash; a project that is part book, part film, and part digital experiment. It's the result of my own process of falling apart and putting myself back together&hellip; and I couldn't have done it without yoga.</p>
+          <p style="margin-top:1.2rem;">I make movies (like my feature, <a href="https://www.scrambledmovie.com" target="_blank" rel="noopener" class="inline-link"><em>Scrambled</em></a>), I write, and I lead initiation rituals for men. My current focus is Future Vibrant Self &mdash; a project that is part book, part film, and part digital experiment. It's the result of my own process of falling apart and putting myself back together&hellip; and I couldn't have done it without yoga.</p>
 
           <p style="margin-top:1.2rem;">
             <a href="https://www.imdb.com/name/nm2676940/" target="_blank" rel="noopener" class="imdb-link">Cool movies I've worked on &rarr;</a>
@@ -937,151 +671,145 @@
 
         <button class="read-more-btn" onclick="document.getElementById('bioFull').classList.toggle('open'); this.textContent = this.textContent.trim() === 'Read more \u2192' ? 'Read less \u2190' : 'Read more \u2192';">Read more &rarr;</button>
       </div>
+
+      <img src="Headshot.jpg" alt="Frank Reina" class="bio-headshot" onerror="this.style.display='none'">
     </div>
   </section>
 
-  <!-- ════ FILMS ════ -->
-  <section class="films" id="films">
+  <!-- ════ SHORT FILMS ════ -->
+  <section class="films-section" id="films">
     <div class="container fade-in">
-      <p class="section-label">Filmography</p>
+      <p class="section-label">Short Films</p>
       <div class="section-divider"></div>
-      <div class="films-grid">
+      <div class="tile-grid">
 
-        <!-- 1. Scrambled Movie Trailer -->
-        <a href="https://www.youtube.com/watch?v=ex0a9rHFAa0" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/hqdefault.jpg" alt="Scrambled Movie Trailer" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Scrambled &mdash; Trailer</span></div>
+        <a href="https://www.youtube.com/watch?v=ex0a9rHFAa0" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/hqdefault.jpg" alt="Scrambled Movie Trailer" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Scrambled &mdash; Trailer</span></div>
         </a>
 
-        <!-- 2. Key Nuts -->
-        <a href="https://www.youtube.com/watch?v=7NQG56d5IfI" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/7NQG56d5IfI/hqdefault.jpg" alt="Key Nuts" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Key Nuts</span></div>
+        <a href="https://www.youtube.com/watch?v=7NQG56d5IfI" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/7NQG56d5IfI/hqdefault.jpg" alt="Key Nuts" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Key Nuts</span></div>
         </a>
 
-        <!-- 3. Star Tails -->
-        <a href="https://www.youtube.com/watch?v=DejRJ8c4FCo" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/DejRJ8c4FCo/hqdefault.jpg" alt="Star Tails" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Star Tails</span></div>
+        <a href="https://www.youtube.com/watch?v=DejRJ8c4FCo" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/DejRJ8c4FCo/hqdefault.jpg" alt="Star Tails" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Star Tails</span></div>
         </a>
 
-        <!-- 4. White Shark -->
-        <a href="https://youtu.be/9Xbo4zT1n94" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/9Xbo4zT1n94/hqdefault.jpg" alt="White Shark" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">White Shark</span></div>
+        <a href="https://youtu.be/9Xbo4zT1n94" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/9Xbo4zT1n94/hqdefault.jpg" alt="White Shark" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">White Shark</span></div>
         </a>
 
-        <!-- 5. Crashettes -->
-        <a href="https://www.youtube.com/watch?v=Rl5jQFxXlYg" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/Rl5jQFxXlYg/hqdefault.jpg" alt="Crashettes" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Crashettes</span></div>
+        <a href="https://www.youtube.com/watch?v=Rl5jQFxXlYg" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/Rl5jQFxXlYg/hqdefault.jpg" alt="Crashettes" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Crashettes</span></div>
         </a>
 
-        <!-- 6. Shit! -->
-        <a href="https://www.youtube.com/watch?v=v-W3dOeyZNw" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/v-W3dOeyZNw/hqdefault.jpg" alt="Shit!" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Shit!</span></div>
+        <a href="https://www.youtube.com/watch?v=v-W3dOeyZNw" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/v-W3dOeyZNw/hqdefault.jpg" alt="Shit!" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Shit!</span></div>
         </a>
 
-        <!-- 7. Strawberries -->
-        <a href="https://www.youtube.com/watch?v=ESg20grWvY8" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/ESg20grWvY8/hqdefault.jpg" alt="Strawberries" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Strawberries</span></div>
+        <a href="https://www.youtube.com/watch?v=ESg20grWvY8" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/ESg20grWvY8/hqdefault.jpg" alt="Strawberries" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Strawberries</span></div>
         </a>
 
-        <!-- 8. Scrambled: First Love Test Footage Teaser -->
-        <a href="https://www.youtube.com/watch?v=Fa1_ipFEPJ8" target="_blank" rel="noopener" class="film-card">
-          <img src="https://img.youtube.com/vi/Fa1_ipFEPJ8/hqdefault.jpg" alt="Scrambled: First Love Test Footage Teaser" class="film-thumb" loading="lazy">
-          <div class="film-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="film-info"><span class="film-title">Scrambled: First Love Teaser</span></div>
+        <a href="https://www.youtube.com/watch?v=Fa1_ipFEPJ8" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/Fa1_ipFEPJ8/hqdefault.jpg" alt="Scrambled: First Love Test Footage Teaser" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="tile-body"><span class="tile-title">Scrambled: First Love Teaser</span></div>
         </a>
 
       </div>
     </div>
   </section>
 
-  <!-- ════ READ (Articles) ════ -->
-  <section class="articles" id="read">
-    <div class="container-wide fade-in">
+  <!-- ════ READ ════ -->
+  <section class="articles-section" id="read">
+    <div class="container fade-in">
       <p class="section-label">Read</p>
       <div class="section-divider"></div>
-      <div class="articles-grid">
+      <div class="tile-grid">
 
-        <a href="https://frankjreina.medium.com/ari-asters-eddington-movie-review-2d7c04a33aa5" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #3a2d23, #6b5340);">E</div>
-          <div class="article-body">
-            <p class="article-pub">Film Review</p>
-            <h3 class="article-title">Ari Aster's 'Eddington' Movie Review</h3>
-            <p class="article-excerpt">A neo-Western trippy movie that struck a deep chord.</p>
+        <a href="https://medium.com/admiring-multipotentiality/how-daniel-day-lewis-is-yoga-4b9f320f67d3" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1200/1*g3yx1i_-3Oem7fFUSVzf7g.jpeg" alt="Method Acting for Your Authentic Self" class="tile-img" loading="lazy">
+          <div class="tile-body">
+            <p class="article-pub">Admiring Multipotentiality</p>
+            <span class="tile-title">Method Acting for Your Authentic Self</span>
+            <p class="article-excerpt">How Daniel Day-Lewis is yoga.</p>
           </div>
         </a>
 
-        <a href="https://medium.com/catharsis-chronicles/tindergarten-of-the-la-fires-1f8ff7f30efd" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #8b3a1a, #c9622a);">T</div>
-          <div class="article-body">
+        <a href="https://medium.com/catharsis-chronicles/tindergarten-of-the-la-fires-1f8ff7f30efd" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1200/1*RjbDjjru_1qGvfX8rkzlZg.jpeg" alt="Tindergarten of the LA Fires" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">Catharsis Chronicles</p>
-            <h3 class="article-title">Tindergarten of the LA Fires</h3>
+            <span class="tile-title">Tindergarten of the LA Fires</span>
             <p class="article-excerpt">The terror and unpredictability of wildfires.</p>
           </div>
         </a>
 
-        <a href="https://medium.com/write-a-catalyst/are-you-a-hidden-deity-97fef79a256a" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #2d3a4a, #4a6480);">A</div>
-          <div class="article-body">
+        <a href="https://medium.com/write-a-catalyst/are-you-a-hidden-deity-97fef79a256a" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1024/0*zIFKAJYlKDpCuSjI.png" alt="Are You a Hidden Deity?" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">Write A Catalyst</p>
-            <h3 class="article-title">Are You a Hidden Deity?</h3>
+            <span class="tile-title">Are You a Hidden Deity?</span>
             <p class="article-excerpt">What if our flaws are imposed to hide something sacred?</p>
           </div>
         </a>
 
-        <a href="https://medium.com/know-thyself-heal-thyself/confessions-of-a-spiritual-hitman-462db1e6e432" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #1a1a2e, #3a3a5c);">C</div>
-          <div class="article-body">
+        <a href="https://medium.com/know-thyself-heal-thyself/confessions-of-a-spiritual-hitman-462db1e6e432" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1200/0*oGhSJN6xUUD76Lbl.jpeg" alt="Confessions of a Spiritual Hitman" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">Know Thyself, Heal Thyself</p>
-            <h3 class="article-title">Confessions of a Spiritual Hitman</h3>
+            <span class="tile-title">Confessions of a Spiritual Hitman</span>
             <p class="article-excerpt">A spiritual noir — the hitman as agent of karma and rescuer.</p>
           </div>
         </a>
 
-        <a href="https://medium.com/know-thyself-heal-thyself/of-gods-and-pranksters-1745f338a9e0" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #4a3a2d, #8b7355);">O</div>
-          <div class="article-body">
+        <a href="https://medium.com/know-thyself-heal-thyself/of-gods-and-pranksters-1745f338a9e0" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1024/0*_CSN9W0GArvTH53f.png" alt="Of Gods and Pranksters" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">Know Thyself, Heal Thyself</p>
-            <h3 class="article-title">Of Gods and Pranksters</h3>
+            <span class="tile-title">Of Gods and Pranksters</span>
             <p class="article-excerpt">Mythology, modernity, and the divine experience intertwined.</p>
           </div>
         </a>
 
-        <a href="https://medium.com/bupublication/luminant-lubrication-56d25c49d597" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #5c4a2d, #c4a050);">L</div>
-          <div class="article-body">
+        <a href="https://medium.com/bupublication/luminant-lubrication-56d25c49d597" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1024/1*jwbq6z6pKdnD_k_gme3njQ.png" alt="Luminant Lubrication" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">BUHUB</p>
-            <h3 class="article-title">Luminant Lubrication</h3>
+            <span class="tile-title">Luminant Lubrication</span>
             <p class="article-excerpt">A poetic interplay between mind, emotion, and spiritual illumination.</p>
           </div>
         </a>
 
-        <a href="https://medium.com/admiring-multipotentiality/martial-bliss-1400ed8a715a" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #2d4a3a, #4a8060);">M</div>
-          <div class="article-body">
+        <a href="https://medium.com/admiring-multipotentiality/martial-bliss-1400ed8a715a" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1024/1*eeJRjJuFnmWNgxa6noqi3Q.png" alt="Martial Bliss" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">Admiring Multipotentiality</p>
-            <h3 class="article-title">Martial Bliss</h3>
+            <span class="tile-title">Martial Bliss</span>
             <p class="article-excerpt">When cruel words spark a personal revolution.</p>
           </div>
         </a>
 
-        <a href="https://medium.com/admiring-multipotentiality/do-hobos-dream-of-electric-pillows-a0ad71dba7e6" target="_blank" rel="noopener" class="article-card">
-          <div class="article-img" style="background: linear-gradient(135deg, #3a2d4a, #6b4a8b);">D</div>
-          <div class="article-body">
+        <a href="https://medium.com/admiring-multipotentiality/do-hobos-dream-of-electric-pillows-a0ad71dba7e6" target="_blank" rel="noopener" class="tile-card">
+          <img src="https://miro.medium.com/v2/resize:fit:1200/1*7qZsrsZAq_2vks7WvZOX7A.jpeg" alt="Do Hobos Dream of Electric Sleep?" class="tile-img" loading="lazy">
+          <div class="tile-body">
             <p class="article-pub">Admiring Multipotentiality</p>
-            <h3 class="article-title">Do Hobos Dream of Electric Sleep?</h3>
+            <span class="tile-title">Do Hobos Dream of Electric Sleep?</span>
             <p class="article-excerpt">Dreams, homelessness, and the edges of empathy.</p>
           </div>
         </a>
@@ -1090,35 +818,6 @@
 
       <div class="load-more-wrap">
         <a href="https://medium.com/@frankjreina" target="_blank" rel="noopener" class="load-more">Load more &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ PROJECTS ════ -->
-  <section class="projects" id="projects">
-    <div class="container fade-in">
-      <p class="section-label">Projects</p>
-      <div class="section-divider"></div>
-      <div class="projects-grid">
-
-        <a href="https://www.scrambledmovie.com" target="_blank" rel="noopener" class="project-card">
-          <img src="Scrambled_poster_purple.jpg" alt="Scrambled" class="project-card-img">
-          <div class="project-card-body">
-            <span class="project-tag">Film</span>
-            <h3>Scrambled</h3>
-            <p>A comic romp described as "a cross between South Park and Almod&oacute;var."</p>
-          </div>
-        </a>
-
-        <a href="https://www.futurevibrantself.com" target="_blank" rel="noopener" class="project-card">
-          <img src="FUTURE_VIBRANT_SELF_Logo.png" alt="Future Vibrant Self" class="project-card-img" style="object-fit: contain; background: #1a1a1a;">
-          <div class="project-card-body">
-            <span class="project-tag">Book &middot; Film &middot; Experience</span>
-            <h3>Future Vibrant Self</h3>
-            <p>Future Vibrant Self is my own unraveling and reinvention &mdash; documented across book, film, and digital experience as a cross-media exploration of personal transformation.</p>
-          </div>
-        </a>
-
       </div>
     </div>
   </section>
@@ -1138,25 +837,8 @@
         ></iframe>
       </div>
       <div class="footprints-playlist">
-        <a href="https://www.youtube.com/playlist?list=PLgBEaTbYLzdk7NK4Mu1IK_c-Ql_J0O5l9" target="_blank" rel="noopener">
-          View full playlist &rarr;
-        </a>
+        <a href="https://www.youtube.com/playlist?list=PLgBEaTbYLzdk7NK4Mu1IK_c-Ql_J0O5l9" target="_blank" rel="noopener">View full playlist &rarr;</a>
       </div>
-    </div>
-  </section>
-
-  <!-- ════ WRITING (Substack) ════ -->
-  <section class="writing">
-    <div class="container fade-in">
-      <p class="section-label">Substack</p>
-      <div class="section-divider"></div>
-      <a href="https://substack.com/@frankjreina" target="_blank" rel="noopener" class="writing-link">
-        <div>
-          <h3>Essays, reflections, and dispatches</h3>
-          <p>Read on Substack</p>
-        </div>
-        <span class="arrow">&rarr;</span>
-      </a>
     </div>
   </section>
 
@@ -1190,23 +872,18 @@
       </div>
 
       <div class="footer-socials">
-        <!-- Instagram -->
         <a href="https://www.instagram.com/frankjreina/" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
-        <!-- X / Twitter -->
         <a href="https://www.x.com/FrankjReina" target="_blank" rel="noopener" aria-label="X">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
-        <!-- YouTube -->
         <a href="https://www.youtube.com/@FrankjReina" target="_blank" rel="noopener" aria-label="YouTube">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12z"/></svg>
         </a>
-        <!-- Substack -->
         <a href="https://substack.com/@frankjreina" target="_blank" rel="noopener" aria-label="Substack">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08zM1.46 10.812V24l9.56-5.39L20.54 24V10.812zM22.54 0H1.46v2.836h21.08z"/></svg>
         </a>
-        <!-- LinkedIn -->
         <a href="https://www.linkedin.com/in/frankjreina/" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg>
         </a>
@@ -1218,18 +895,17 @@
   </footer>
 
   <!-- ════ SCRIPTS ════ -->
-
-  <!-- YouTube IFrame API -->
   <script>
+    // YouTube IFrame API
     var tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    document.head.appendChild(tag);
 
     var bgPlayer;
+    var heroSection = document.getElementById('heroSection');
 
     function onYouTubeIframeAPIReady() {
-      bgPlayer = new YT.Player('heroBg', {
+      bgPlayer = new YT.Player('heroVideoWrap', {
         videoId: 'IYzPYD2eQQg',
         playerVars: {
           autoplay: 1,
@@ -1253,6 +929,7 @@
           },
           onStateChange: function(e) {
             if (e.data === YT.PlayerState.ENDED) {
+              e.target.seekTo(0);
               e.target.playVideo();
             }
           }
@@ -1260,26 +937,24 @@
       });
     }
 
-    // Video Modal
-    function openVideoModal() {
-      var modal = document.getElementById('videoModal');
-      modal.classList.add('open');
-      document.getElementById('modalPlayer').innerHTML =
-        '<iframe src="https://www.youtube.com/embed/IYzPYD2eQQg?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;"></iframe>';
-      document.body.style.overflow = 'hidden';
+    // "Play me" — unmute + go full experience
+    function playHeroAudio() {
+      if (bgPlayer && bgPlayer.unMute) {
+        bgPlayer.unMute();
+        bgPlayer.setVolume(100);
+        bgPlayer.seekTo(0);
+        bgPlayer.playVideo();
+        heroSection.classList.add('playing');
+      }
     }
 
-    function closeVideoModal(e) {
-      if (e && e.target !== e.currentTarget && !e.target.classList.contains('video-modal-close')) return;
-      var modal = document.getElementById('videoModal');
-      modal.classList.remove('open');
-      document.getElementById('modalPlayer').innerHTML = '';
-      document.body.style.overflow = '';
+    // Close — mute and restore overlay
+    function muteHero() {
+      if (bgPlayer && bgPlayer.mute) {
+        bgPlayer.mute();
+        heroSection.classList.remove('playing');
+      }
     }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeVideoModal();
-    });
 
     // Fade-in on scroll
     var observer = new IntersectionObserver(function(entries) {
@@ -1290,7 +965,7 @@
 
     document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
-    // Close mobile nav on link click
+    // Mobile nav close on link click
     document.querySelectorAll('.nav-links a').forEach(function(link) {
       link.addEventListener('click', function() {
         document.querySelector('.nav-links').classList.remove('open');
