@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frank Reina — Writer. Filmmaker. Creator of Future Vibrant Self.</title>
+  <meta name="description" content="Frank Reina is a storyteller and filmmaker. Your value is your story.">
+  <meta property="og:title" content="Frank Reina">
+  <meta property="og:description" content="Writer. Filmmaker. Creator of Future Vibrant Self.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.frankreina.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #faf8f5;
+      --warm-white: #f5f1eb;
+      --text: #1a1a1a;
+      --text-light: #5a5347;
+      --bronze: #8b7355;
+      --bronze-light: #c4b49a;
+      --bronze-faint: #e8dfd3;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--bronze-faint);
+      transition: transform 0.3s ease;
+    }
+
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover { color: var(--bronze); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .hero-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      margin-bottom: 2.5rem;
+      filter: grayscale(15%);
+      border: 3px solid var(--bronze-light);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .hero .tagline {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bronze);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero .descriptor {
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .scroll-hint {
+      margin-top: 3rem;
+      opacity: 0.4;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .scroll-hint svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--bronze);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 2rem; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--bronze-light);
+      margin-bottom: 2rem;
+    }
+
+    /* BIO */
+    .bio {
+      background: var(--cream);
+    }
+
+    .bio-text {
+      font-family: var(--serif);
+      font-size: clamp(1.15rem, 2vw, 1.35rem);
+      line-height: 1.85;
+      color: var(--text);
+      max-width: 750px;
+    }
+
+    .bio-text a {
+      color: var(--bronze);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .bio-text a:hover { color: var(--text); }
+
+    .bio-full {
+      display: none;
+      margin-top: 1.5rem;
+    }
+
+    .bio-full.open { display: block; }
+
+    .read-more {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--sans);
+      transition: color 0.2s;
+    }
+
+    .read-more:hover { color: var(--text); }
+
+    /* FILMS */
+    .films {
+      background: var(--warm-white);
+    }
+
+    .films-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .film-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--cream);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+    }
+
+    .film-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.15);
+    }
+
+    .film-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.3s;
+    }
+
+    .film-card:hover .film-thumb {
+      filter: brightness(1.05);
+    }
+
+    .film-card .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -70%);
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .film-card:hover .play-icon { opacity: 1; }
+
+    .play-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--text);
+      margin-left: 2px;
+    }
+
+    .film-info {
+      padding: 0.6rem 0.8rem;
+    }
+
+    .film-title {
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* MANIFESTO */
+    .manifesto {
+      background: var(--cream);
+      text-align: center;
+      padding: 8rem 2rem;
+    }
+
+    .manifesto-text {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--text);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .manifesto-line {
+      width: 60px;
+      height: 1px;
+      background: var(--bronze);
+      margin: 2rem auto 0;
+    }
+
+    /* PROJECTS */
+    .projects {
+      background: var(--warm-white);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .project-card {
+      padding: 2.5rem;
+      background: var(--cream);
+      border-radius: 8px;
+      border: 1px solid var(--bronze-faint);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      display: block;
+    }
+
+    .project-card:hover {
+      border-color: var(--bronze-light);
+      box-shadow: 0 8px 30px rgba(139, 115, 85, 0.1);
+    }
+
+    .project-card h3 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-card p {
+      font-size: 0.92rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .project-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 1rem;
+    }
+
+    /* WRITING */
+    .writing {
+      background: var(--cream);
+    }
+
+    .writing-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--bronze-faint);
+      text-decoration: none;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
+    .writing-link:first-child { border-top: 1px solid var(--bronze-faint); }
+    .writing-link:hover { color: var(--bronze); }
+
+    .writing-link .arrow {
+      margin-left: auto;
+      font-size: 1.2rem;
+      color: var(--bronze-light);
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .writing-link:hover .arrow {
+      transform: translateX(4px);
+      color: var(--bronze);
+    }
+
+    .writing-link h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+    }
+
+    .writing-link p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 0.2rem;
+    }
+
+    /* VIDEO JOURNAL TILE */
+    .video-journal-tile {
+      display: block;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: var(--cream);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-journal-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.15);
+    }
+
+    .vj-thumb {
+      width: 100%;
+      aspect-ratio: 21/9;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.45);
+      transition: filter 0.3s;
+    }
+
+    .video-journal-tile:hover .vj-thumb {
+      filter: brightness(0.55);
+    }
+
+    .vj-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .vj-label {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+    }
+
+    .vj-sub {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+
+    .vj-cta {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .video-journal-tile:hover .vj-cta { opacity: 1; }
+
+    /* SIGNUP */
+    .signup {
+      background: var(--warm-white);
+      text-align: center;
+    }
+
+    .signup h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .signup .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-form {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 0.9rem 1.2rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      border: 1px solid var(--bronze-faint);
+      border-radius: 6px;
+      background: var(--cream);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: var(--bronze-light); }
+    .signup-form input:focus { border-color: var(--bronze); }
+
+    .signup-form button {
+      padding: 0.9rem 2rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--text);
+      color: var(--cream);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: var(--bronze); }
+
+    /* FOOTER */
+    footer {
+      padding: 4rem 2rem 3rem;
+      background: var(--cream);
+      border-top: 1px solid var(--bronze-faint);
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-brand h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .footer-sites {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-sites a {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-sites a:hover { color: var(--bronze); }
+
+    .footer-socials {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .footer-socials a {
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .footer-socials a:hover { color: var(--bronze); }
+
+    .footer-socials svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .footer-bottom {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--bronze-faint);
+      font-size: 0.78rem;
+      color: var(--bronze-light);
+      text-align: center;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+
+      nav .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 1.5rem 2rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid var(--bronze-faint);
+      }
+
+      nav .nav-links.open { display: flex; }
+
+      .hero { min-height: auto; padding: 7rem 1.5rem 4rem; }
+      .hero-photo { width: 150px; height: 150px; }
+
+      section { padding: 4rem 1.5rem; }
+
+      .films-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; }
+
+      .footer-inner { flex-direction: column; text-align: center; align-items: center; }
+      .footer-socials { justify-content: center; }
+    }
+
+    /* FADE IN */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Frank Reina</a>
+      <button class="hamburger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#bio">Biography</a></li>
+        <li><a href="#films">Films</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner fade-in">
+      <!-- Replace 'headshot.jpg' with your actual headshot filename -->
+      <img src="headshot.jpg" alt="Frank Reina" class="hero-photo" onerror="this.style.display='none'">
+      <h1>Frank Reina</h1>
+      <p class="tagline">Your value is your story</p>
+      <p class="descriptor">Writer &middot; Filmmaker &middot; Creator of Future Vibrant Self</p>
+      <div class="scroll-hint">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section class="bio" id="bio">
+    <div class="container fade-in">
+      <p class="section-label">Biography</p>
+      <div class="section-divider"></div>
+      <div class="bio-text">
+        <p>I am a filmmaker and storyteller residing in Los Angeles.</p>
+
+        <p style="margin-top:1.2rem;">I spent my early years in San Juan, Puerto Rico, and my professional years in the trenches of Hollywood. I've been a talent agent and a production assistant on two Christopher Nolan movies (<em>The Dark Knight Rises</em>, <em>Interstellar</em>), worked under legendary producer Robert Evans (<em>Chinatown</em>), and served as the right-hand man to action director Spiro Razatos (maestro of the physics-defying car chases for the <em>Fast &amp; Furious</em> franchise).</p>
+
+        <div class="bio-full" id="bioFull">
+          <p style="margin-top:1.2rem;">My name is on the credits of movies like <em>Captain America: Civil War</em>, <em>Venom</em>, and the Coen Bros all-star movie <em>Hail, Caesar!</em></p>
+
+          <p style="margin-top:1.2rem;">I make movies (like my feature, <em>Scrambled</em>), I write, and I lead initiation rituals for men. My current focus is Future Vibrant Self &mdash; a project that is part book, part film, and part digital experiment. It's the result of my own process of falling apart and putting myself back together&hellip; and I couldn't have done it without yoga.</p>
+        </div>
+
+        <button class="read-more" onclick="document.getElementById('bioFull').classList.toggle('open'); this.textContent = this.textContent === 'Read more \u2192' ? 'Read less \u2190' : 'Read more \u2192';">Read more &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILMS -->
+  <section class="films" id="films">
+    <div class="container fade-in">
+      <p class="section-label">Filmography</p>
+      <div class="section-divider"></div>
+      <div class="films-grid">
+
+        <!-- Row 1 -->
+        <a href="https://www.youtube.com/watch?v=ex0a9rHFAa0" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/hqdefault.jpg" alt="Scrambled Movie Trailer" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Scrambled &mdash; Trailer</span></div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=v-W3dOeyZNw" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/v-W3dOeyZNw/hqdefault.jpg" alt="Shit!" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Shit!</span></div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=ESg20grWvY8" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/ESg20grWvY8/hqdefault.jpg" alt="Strawberries" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Strawberries</span></div>
+        </a>
+
+        <a href="https://youtu.be/9Xbo4zT1n94" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/9Xbo4zT1n94/hqdefault.jpg" alt="White Shark" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">White Shark</span></div>
+        </a>
+
+        <!-- Row 2 -->
+        <a href="https://www.youtube.com/watch?v=Rl5jQFxXlYg" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/Rl5jQFxXlYg/hqdefault.jpg" alt="Crashettes" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Crashettes</span></div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=DejRJ8c4FCo" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/DejRJ8c4FCo/hqdefault.jpg" alt="Star Tails" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Star Tails</span></div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=7NQG56d5IfI" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/7NQG56d5IfI/hqdefault.jpg" alt="Key Nuts" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Key Nuts</span></div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=Fa1_ipFEPJ8" target="_blank" rel="noopener" class="film-card">
+          <img src="https://img.youtube.com/vi/Fa1_ipFEPJ8/hqdefault.jpg" alt="Scrambled: First Love Test Footage" class="film-thumb" loading="lazy">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <div class="film-info"><span class="film-title">Scrambled: First Love Teaser</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <div class="fade-in">
+      <p class="manifesto-text">Self-transformation through storytelling</p>
+      <div class="manifesto-line"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="container fade-in">
+      <p class="section-label">Projects</p>
+      <div class="section-divider"></div>
+      <div class="projects-grid">
+
+        <a href="https://www.scrambledmovie.com" target="_blank" rel="noopener" class="project-card">
+          <span class="project-tag">Film</span>
+          <h3>Scrambled</h3>
+          <p>A comic romp described as "a cross between South Park and Almod&oacute;var." Now on the festival circuit.</p>
+        </a>
+
+        <a href="https://www.futurevibrantself.com" target="_blank" rel="noopener" class="project-card">
+          <span class="project-tag">Book &middot; Film &middot; Experience</span>
+          <h3>Future Vibrant Self</h3>
+          <p>Future Vibrant Self is my own unraveling and reinvention &mdash; documented across book, film, and digital experience as a cross-media exploration of personal transformation.</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="writing" id="writing">
+    <div class="container fade-in">
+      <p class="section-label">Writing &amp; Video Journals</p>
+      <div class="section-divider"></div>
+
+      <a href="https://substack.com/@frankjreina" target="_blank" rel="noopener" class="writing-link">
+        <div>
+          <h3>Substack</h3>
+          <p>Essays, reflections, and dispatches</p>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+      <a href="https://www.youtube.com/@FrankjReina" target="_blank" rel="noopener" class="video-journal-tile">
+        <img src="https://img.youtube.com/vi/v-W3dOeyZNw/hqdefault.jpg" alt="Video Journals" class="vj-thumb" loading="lazy">
+        <div class="vj-overlay">
+          <span class="vj-label">Video Journals</span>
+          <span class="vj-sub">Behind-the-scenes &amp; personal video messages</span>
+          <span class="vj-cta">Watch on YouTube &rarr;</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- SIGNUP -->
+  <section class="signup" id="connect">
+    <div class="container fade-in">
+      <h2>Stay in the loop</h2>
+      <p class="subtitle">Get notified when Scrambled drops, a new video message comes out, or Future Vibrant Self launches.</p>
+      <!-- Replace YOUR_FORM_ID with your actual Formspree endpoint -->
+      <form class="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <input type="text" name="firstName" placeholder="First name" required>
+          <input type="text" name="lastName" placeholder="Last name" required>
+        </div>
+        <input type="email" name="email" placeholder="Email address" required>
+        <button type="submit">Keep me posted</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>Frank Reina</h3>
+        <p>Your value is your story.</p>
+      </div>
+
+      <div class="footer-sites">
+        <a href="https://www.scrambledmovie.com" target="_blank">scrambledmovie.com</a>
+        <a href="https://www.futurevibrantself.com" target="_blank">futurevibrantself.com</a>
+      </div>
+
+      <div class="footer-socials">
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/frankjreina/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <!-- X / Twitter -->
+        <a href="https://www.x.com/FrankjReina" target="_blank" rel="noopener" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@FrankjReina" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12z"/></svg>
+        </a>
+        <!-- Substack -->
+        <a href="https://substack.com/@frankjreina" target="_blank" rel="noopener" aria-label="Substack">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08zM1.46 10.812V24l9.56-5.39L20.54 24V10.812zM22.54 0H1.46v2.836h21.08z"/></svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/frankjreina/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg>
+        </a>
+        <!-- IMDB -->
+        <a href="https://www.imdb.com/name/nm2676940/" target="_blank" rel="noopener" aria-label="IMDb">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.31 9.588v4.824h1.236V9.588zM22.632 0H1.368C.612 0 0 .612 0 1.368v21.264C0 23.388.612 24 1.368 24h21.264c.756 0 1.368-.612 1.368-1.368V1.368C24 .612 23.388 0 22.632 0zM4.14 17.04H2.04V6.96h2.1zm7.236 0H9.636l-.06-4.884-.84 4.884h-1.2l-.78-4.86-.06 4.86H4.956V6.96h2.4l.6 4.2.54-4.2h2.28zm4.884 0h-1.86l-.12-.6h-.048c-.36.516-.852.72-1.488.72-1.056 0-1.584-.756-1.584-2.28v-4.92h1.896v4.68c0 .624.18.9.516.9.276 0 .468-.144.588-.408V10.08h-.012V6.96h2.112zm4.68-4.08c0 .6-.024 1.032-.06 1.296-.036.264-.132.528-.288.792-.156.264-.372.456-.648.576-.276.12-.612.18-1.008.18-.384 0-.72-.06-.996-.18s-.492-.312-.648-.576a2.12 2.12 0 0 1-.288-.792c-.036-.264-.06-.696-.06-1.296v-1.2c0-.6.024-1.032.06-1.296.036-.264.132-.528.288-.792.156-.264.372-.456.648-.576.276-.12.612-.18 1.008-.18.384 0 .72.06.996.18s.492.312.648.576c.156.264.252.528.288.792.036.264.06.696.06 1.296zm-1.848-1.62c0-.624-.024-1.02-.06-1.188-.036-.168-.132-.252-.276-.252s-.24.084-.276.252c-.036.168-.06.564-.06 1.188v2.16c0 .636.024 1.032.06 1.2.036.168.12.252.276.252.144 0 .24-.084.276-.252.036-.168.06-.564.06-1.2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Frank Reina. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
