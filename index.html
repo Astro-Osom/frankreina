@@ -112,39 +112,14 @@
       background: #0a0a0a;
     }
 
-    /* Poster fallback — shows while YouTube loads */
-    .hero-poster {
+    /* HTML5 background video — like wildatheart.org */
+    .hero-video {
       position: absolute;
       inset: 0;
-      z-index: 0;
-      background: url('https://img.youtube.com/vi/IYzPYD2eQQg/maxresdefault.jpg') center/cover no-repeat;
-    }
-
-    /*
-     * YouTube background video — the trick:
-     * Scale the iframe to ~120% and shift it so the top title bar
-     * and bottom controls are cropped outside overflow:hidden.
-     * pointer-events:none prevents any interaction with YT chrome.
-     */
-    .hero-video-bg {
-      position: absolute;
-      inset: -80px -60px; /* negative inset = oversized container */
       z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .hero-video-bg iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      /* Make iframe significantly larger than container so YT UI is cropped */
-      width: 120%;
-      height: 120%;
-      min-width: calc(177.78vh + 120px);
-      min-height: calc(100vh + 160px);
-      transform: translate(-50%, -50%);
-      border: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     /* Subtle dark wash over the video */
@@ -152,7 +127,7 @@
       position: absolute;
       inset: 0;
       z-index: 2;
-      background: rgba(10, 10, 10, 0.45);
+      background: rgba(10, 10, 10, 0.40);
     }
 
     /* Text + button centered over everything */
@@ -633,8 +608,6 @@
       .nav-links.open { display: flex; }
 
       .hero { height: 80vh; }
-      .hero-video-bg { inset: -100px -80px; }
-      .hero-video-bg iframe { min-width: calc(177.78vh + 160px); min-height: calc(100vh + 200px); }
       section { padding: 4rem 1.5rem; }
 
       .tile-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
@@ -680,8 +653,9 @@
 
   <!-- ════ HERO ════ -->
   <section class="hero" id="heroSection">
-    <div class="hero-poster"></div>
-    <div class="hero-video-bg" id="heroVideoBg"></div>
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-headline">Self-transformation through storytelling</p>
@@ -692,7 +666,7 @@
     </div>
   </section>
 
-  <!-- Video Modal -->
+  <!-- Video Modal — full film with audio via YouTube -->
   <div class="video-modal" id="videoModal" onclick="closeVideoModal(event)">
     <div class="video-modal-inner">
       <button class="video-modal-close" onclick="closeVideoModal()">&times;</button>
@@ -940,56 +914,22 @@
 
   <!-- ════ SCRIPTS ════ -->
   <script>
-    /* ── YouTube IFrame API: silent looping background ── */
-    var tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-
-    var bgPlayer;
-
-    function onYouTubeIframeAPIReady() {
-      bgPlayer = new YT.Player('heroVideoBg', {
-        videoId: 'IYzPYD2eQQg',
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          loop: 1,
-          playlist: 'IYzPYD2eQQg',
-          modestbranding: 1,
-          playsinline: 1,
-          disablekb: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          cc_load_policy: 0,
-          origin: window.location.origin
-        },
-        events: {
-          onReady: function(e) {
-            e.target.mute();
-            e.target.playVideo();
-          },
-          onStateChange: function(e) {
-            if (e.data === YT.PlayerState.ENDED) {
-              e.target.seekTo(0);
-              e.target.playVideo();
-            }
-          }
-        }
+    /* ── Hero video: ensure autoplay on load ── */
+    var heroVideo = document.getElementById('heroVideo');
+    if (heroVideo) {
+      heroVideo.play().catch(function() {
+        /* Autoplay blocked — will show first frame as still */
       });
     }
 
-    /* ── PLAY FILM modal (with audio) ── */
+    /* ── PLAY FILM — opens YouTube with audio in a modal ── */
     function openVideoModal() {
       var modal = document.getElementById('videoModal');
       var iframe = document.getElementById('modalIframe');
       iframe.src = 'https://www.youtube.com/embed/IYzPYD2eQQg?autoplay=1&rel=0&modestbranding=1';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
-      // Pause background while modal is open
-      if (bgPlayer && bgPlayer.pauseVideo) bgPlayer.pauseVideo();
+      if (heroVideo) heroVideo.pause();
     }
 
     function closeVideoModal(e) {
@@ -999,8 +939,7 @@
       iframe.src = '';
       modal.classList.remove('open');
       document.body.style.overflow = '';
-      // Resume background
-      if (bgPlayer && bgPlayer.playVideo) bgPlayer.playVideo();
+      if (heroVideo) heroVideo.play();
     }
 
     document.addEventListener('keydown', function(e) {
