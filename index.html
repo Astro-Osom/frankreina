@@ -112,29 +112,50 @@
       background: #0a0a0a;
     }
 
-    /* Clean poster background with Ken Burns */
+    /* Poster fallback — shows while YouTube loads */
     .hero-poster {
       position: absolute;
       inset: 0;
       z-index: 0;
       background: url('https://img.youtube.com/vi/IYzPYD2eQQg/maxresdefault.jpg') center/cover no-repeat;
-      animation: kenBurns 20s ease-in-out infinite alternate;
     }
 
-    @keyframes kenBurns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
+    /*
+     * YouTube background video — the trick:
+     * Scale the iframe to ~120% and shift it so the top title bar
+     * and bottom controls are cropped outside overflow:hidden.
+     * pointer-events:none prevents any interaction with YT chrome.
+     */
+    .hero-video-bg {
+      position: absolute;
+      inset: -80px -60px; /* negative inset = oversized container */
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
     }
 
-    /* Dark overlay */
+    .hero-video-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* Make iframe significantly larger than container so YT UI is cropped */
+      width: 120%;
+      height: 120%;
+      min-width: calc(177.78vh + 120px);
+      min-height: calc(100vh + 160px);
+      transform: translate(-50%, -50%);
+      border: none;
+    }
+
+    /* Subtle dark wash over the video */
     .hero-overlay {
       position: absolute;
       inset: 0;
       z-index: 2;
-      background: rgba(10, 10, 10, 0.50);
+      background: rgba(10, 10, 10, 0.45);
     }
 
-    /* Content overlay */
+    /* Text + button centered over everything */
     .hero-content {
       position: absolute;
       inset: 0;
@@ -184,7 +205,7 @@
 
     .play-me-btn svg { width: 14px; height: 14px; fill: #f0ede6; }
 
-    /* Video modal */
+    /* Video modal — opens when you click PLAY FILM */
     .video-modal {
       display: none;
       position: fixed;
@@ -612,6 +633,8 @@
       .nav-links.open { display: flex; }
 
       .hero { height: 80vh; }
+      .hero-video-bg { inset: -100px -80px; }
+      .hero-video-bg iframe { min-width: calc(177.78vh + 160px); min-height: calc(100vh + 200px); }
       section { padding: 4rem 1.5rem; }
 
       .tile-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
@@ -658,6 +681,7 @@
   <!-- ════ HERO ════ -->
   <section class="hero" id="heroSection">
     <div class="hero-poster"></div>
+    <div class="hero-video-bg" id="heroVideoBg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-headline">Self-transformation through storytelling</p>
@@ -849,7 +873,7 @@
       <div class="section-divider"></div>
       <div class="footprints-featured">
         <iframe
-          src="https://www.youtube.com/embed/npPEeVI4-rY?list=PLgBEaTbYLzdk7NK4Mu1IK_c-Ql_J0O5l9&rel=0"
+          src="https://www.youtube.com/embed/npPEeVI4-rY?list=PLgBEaTbYLzdk7NK4Mu1IK_c-Ql_J0O5l9&rel=0&modestbranding=1"
           title="Digital Footprints"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -916,13 +940,56 @@
 
   <!-- ════ SCRIPTS ════ -->
   <script>
-    // Video modal
+    /* ── YouTube IFrame API: silent looping background ── */
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    var bgPlayer;
+
+    function onYouTubeIframeAPIReady() {
+      bgPlayer = new YT.Player('heroVideoBg', {
+        videoId: 'IYzPYD2eQQg',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          loop: 1,
+          playlist: 'IYzPYD2eQQg',
+          modestbranding: 1,
+          playsinline: 1,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          cc_load_policy: 0,
+          origin: window.location.origin
+        },
+        events: {
+          onReady: function(e) {
+            e.target.mute();
+            e.target.playVideo();
+          },
+          onStateChange: function(e) {
+            if (e.data === YT.PlayerState.ENDED) {
+              e.target.seekTo(0);
+              e.target.playVideo();
+            }
+          }
+        }
+      });
+    }
+
+    /* ── PLAY FILM modal (with audio) ── */
     function openVideoModal() {
       var modal = document.getElementById('videoModal');
       var iframe = document.getElementById('modalIframe');
       iframe.src = 'https://www.youtube.com/embed/IYzPYD2eQQg?autoplay=1&rel=0&modestbranding=1';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
+      // Pause background while modal is open
+      if (bgPlayer && bgPlayer.pauseVideo) bgPlayer.pauseVideo();
     }
 
     function closeVideoModal(e) {
@@ -932,14 +999,15 @@
       iframe.src = '';
       modal.classList.remove('open');
       document.body.style.overflow = '';
+      // Resume background
+      if (bgPlayer && bgPlayer.playVideo) bgPlayer.playVideo();
     }
 
-    // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeVideoModal();
     });
 
-    // Fade-in on scroll
+    /* ── Fade-in on scroll ── */
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -948,7 +1016,7 @@
 
     document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
-    // Mobile nav close on link click
+    /* ── Mobile nav ── */
     document.querySelectorAll('.nav-links a').forEach(function(link) {
       link.addEventListener('click', function() {
         document.querySelector('.nav-links').classList.remove('open');
