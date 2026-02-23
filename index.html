@@ -112,43 +112,26 @@
       background: #0a0a0a;
     }
 
-    /* YouTube background container */
-    .hero-video-wrap {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .hero-video-wrap iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 177.78vh; /* 16:9 */
-      height: 100vh;
-      min-width: 100%;
-      min-height: 56.25vw;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Dark overlay — fades out when playing */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: rgba(10, 10, 10, 0.50);
-      transition: opacity 0.6s ease;
-    }
-
-    .hero.playing .hero-overlay { opacity: 0; pointer-events: none; }
-
-    /* Poster fallback */
+    /* Clean poster background with Ken Burns */
     .hero-poster {
       position: absolute;
       inset: 0;
       z-index: 0;
       background: url('https://img.youtube.com/vi/IYzPYD2eQQg/maxresdefault.jpg') center/cover no-repeat;
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes kenBurns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+
+    /* Dark overlay */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: rgba(10, 10, 10, 0.50);
     }
 
     /* Content overlay */
@@ -162,10 +145,7 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      transition: opacity 0.6s ease;
     }
-
-    .hero.playing .hero-content { opacity: 0; pointer-events: none; }
 
     .hero-headline {
       font-family: var(--serif);
@@ -204,28 +184,53 @@
 
     .play-me-btn svg { width: 14px; height: 14px; fill: #f0ede6; }
 
-    /* Close/unmute toggle */
-    .hero-close {
-      position: absolute;
-      top: 5rem;
-      right: 2rem;
-      z-index: 20;
+    /* Video modal */
+    .video-modal {
       display: none;
-      width: 44px;
-      height: 44px;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .video-modal.open { display: flex; }
+
+    .video-modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      aspect-ratio: 16/9;
+    }
+
+    .video-modal-inner iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .video-modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
       transition: background 0.2s;
     }
 
-    .hero-close:hover { background: rgba(0,0,0,0.7); }
-    .hero.playing .hero-close { display: flex; }
+    .video-modal-close:hover { background: rgba(255, 255, 255, 0.25); }
 
     /* ═══ SECTIONS ═══ */
     section { padding: 6rem 2rem; }
@@ -363,7 +368,7 @@
 
     .film-tile .tile-play {
       position: absolute;
-      top: 42%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 36px;
@@ -379,6 +384,22 @@
 
     .film-tile:hover .tile-play { opacity: 1; }
     .tile-play svg { width: 13px; height: 13px; fill: var(--text); margin-left: 2px; }
+
+    /* Scrambled Trailer text overlay */
+    .film-overlay-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.6rem 0.8rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #f0ede6;
+      letter-spacing: 0.03em;
+      pointer-events: none;
+    }
 
     .tile-title {
       font-family: var(--serif);
@@ -637,17 +658,23 @@
   <!-- ════ HERO ════ -->
   <section class="hero" id="heroSection">
     <div class="hero-poster"></div>
-    <div class="hero-video-wrap" id="heroVideoWrap"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-headline">Self-transformation through storytelling</p>
-      <button class="play-me-btn" onclick="playHeroAudio()">
+      <button class="play-me-btn" onclick="openVideoModal()">
         <svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg>
-        Play me
+        Play Film
       </button>
     </div>
-    <button class="hero-close" onclick="muteHero()" aria-label="Close">&times;</button>
   </section>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal" onclick="closeVideoModal(event)">
+    <div class="video-modal-inner">
+      <button class="video-modal-close" onclick="closeVideoModal()">&times;</button>
+      <iframe id="modalIframe" src="" title="Film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
 
   <!-- ════ BIO ════ -->
   <section class="bio" id="bio">
@@ -655,14 +682,14 @@
       <p class="section-label">Biography</p>
       <div class="section-divider"></div>
       <div class="bio-text">
-        <p>I am a filmmaker and storyteller residing in Los Angeles. A man of Cuban blood and Puerto Rican soil. </p>
+        <p>I am a filmmaker and storyteller living in Los Angeles. A man of Cuban blood, and Puerto Rican soil. My quest from the Caribbean to the trenches of Hollywood's biggest productions, overcoming numerous challenges along the way, has taught me one thing: storytelling transforms lives.</p>
 
-        <p style="margin-top:1.2rem;">I spent my early years in San Juan, Puerto Rico, and my professional years in the trenches of Hollywood. I've been a talent agent and a production assistant on two Christopher Nolan movies (<em>The Dark Knight Rises</em>, <em>Interstellar</em>), worked under legendary producer Robert Evans (<em>Chinatown</em>), and served as the right-hand man to action director Spiro Razatos (maestro of the physics-defying car chases for the <em>Fast &amp; Furious</em> franchise).</p>
+        <p style="margin-top:1.2rem;">I've been a talent agent and a fly on the wall on two Christopher Nolan movies (<em>The Dark Knight Rises</em>, <em>Interstellar</em>), worked under legendary producer Robert Evans (<em>Chinatown</em>, <em>The Kid Stays in the Picture</em>), and served as the right-hand man to action director Spiro Razatos (maestro of the physics-defying car chases for the <em>Fast &amp; Furious</em> franchise).</p>
 
         <div class="bio-full" id="bioFull">
           <p style="margin-top:1.2rem;">My name is on the credits of movies like <em>Captain America: Civil War</em>, <em>Venom</em>, and the Coen Bros all-star movie <em>Hail, Caesar!</em></p>
 
-          <p style="margin-top:1.2rem;">I make movies (like my feature, <a href="https://www.scrambledmovie.com" target="_blank" rel="noopener" class="inline-link"><em>Scrambled</em></a>), I write, and I lead initiation rituals for men. My current focus is Future Vibrant Self &mdash; a project that is part book, part film, and part digital experiment. It's the result of my own process of falling apart and putting myself back together&hellip; and I couldn't have done it without yoga.</p>
+          <p style="margin-top:1.2rem;">I make movies (like my feature, <a href="https://www.scrambledmovie.com" target="_blank" rel="noopener" class="inline-link"><em>Scrambled</em></a>), I write, and I lead initiation rituals for men. My current focus is Future Vibrant Self &mdash; a vibequest that is part book, part film, and part digital experiment &mdash; that tracks self-sabotage to personal transformation&hellip; and I couldn't have done it without yoga. Storytelling transforms lives.</p>
 
           <p style="margin-top:1.2rem;">
             <a href="https://www.imdb.com/name/nm2676940/" target="_blank" rel="noopener" class="imdb-link">Cool movies I've worked on &rarr;</a>
@@ -684,51 +711,44 @@
       <div class="tile-grid">
 
         <a href="https://www.youtube.com/watch?v=ex0a9rHFAa0" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/hqdefault.jpg" alt="Scrambled Movie Trailer" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/maxresdefault.jpg" alt="Scrambled Movie Trailer" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Scrambled &mdash; Trailer</span></div>
+          <span class="film-overlay-text">Scrambled Trailer</span>
         </a>
 
         <a href="https://www.youtube.com/watch?v=7NQG56d5IfI" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/7NQG56d5IfI/hqdefault.jpg" alt="Key Nuts" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/7NQG56d5IfI/maxresdefault.jpg" alt="Key Nuts" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Key Nuts</span></div>
         </a>
 
         <a href="https://www.youtube.com/watch?v=DejRJ8c4FCo" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/DejRJ8c4FCo/hqdefault.jpg" alt="Star Tails" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/DejRJ8c4FCo/maxresdefault.jpg" alt="Star Tails" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Star Tails</span></div>
         </a>
 
         <a href="https://youtu.be/9Xbo4zT1n94" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/9Xbo4zT1n94/hqdefault.jpg" alt="White Shark" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/9Xbo4zT1n94/maxresdefault.jpg" alt="White Shark" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">White Shark</span></div>
         </a>
 
         <a href="https://www.youtube.com/watch?v=Rl5jQFxXlYg" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/Rl5jQFxXlYg/hqdefault.jpg" alt="Crashettes" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/Rl5jQFxXlYg/maxresdefault.jpg" alt="Crashettes" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Crashettes</span></div>
         </a>
 
         <a href="https://www.youtube.com/watch?v=v-W3dOeyZNw" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/v-W3dOeyZNw/hqdefault.jpg" alt="Shit!" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/v-W3dOeyZNw/maxresdefault.jpg" alt="Shit!" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Shit!</span></div>
         </a>
 
         <a href="https://www.youtube.com/watch?v=ESg20grWvY8" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/ESg20grWvY8/hqdefault.jpg" alt="Strawberries" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/ESg20grWvY8/maxresdefault.jpg" alt="Strawberries" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Strawberries</span></div>
         </a>
 
         <a href="https://www.youtube.com/watch?v=Fa1_ipFEPJ8" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/Fa1_ipFEPJ8/hqdefault.jpg" alt="Scrambled: First Love Test Footage Teaser" class="tile-img" loading="lazy">
+          <img src="https://img.youtube.com/vi/Fa1_ipFEPJ8/maxresdefault.jpg" alt="Scrambled: First Love Test Footage Teaser" class="tile-img" loading="lazy">
           <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <div class="tile-body"><span class="tile-title">Scrambled: First Love Teaser</span></div>
         </a>
 
       </div>
@@ -896,65 +916,28 @@
 
   <!-- ════ SCRIPTS ════ -->
   <script>
-    // YouTube IFrame API
-    var tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-
-    var bgPlayer;
-    var heroSection = document.getElementById('heroSection');
-
-    function onYouTubeIframeAPIReady() {
-      bgPlayer = new YT.Player('heroVideoWrap', {
-        videoId: 'IYzPYD2eQQg',
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          loop: 1,
-          playlist: 'IYzPYD2eQQg',
-          modestbranding: 1,
-          playsinline: 1,
-          disablekb: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          origin: window.location.origin
-        },
-        events: {
-          onReady: function(e) {
-            e.target.mute();
-            e.target.playVideo();
-          },
-          onStateChange: function(e) {
-            if (e.data === YT.PlayerState.ENDED) {
-              e.target.seekTo(0);
-              e.target.playVideo();
-            }
-          }
-        }
-      });
+    // Video modal
+    function openVideoModal() {
+      var modal = document.getElementById('videoModal');
+      var iframe = document.getElementById('modalIframe');
+      iframe.src = 'https://www.youtube.com/embed/IYzPYD2eQQg?autoplay=1&rel=0&modestbranding=1';
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
 
-    // "Play me" — unmute + go full experience
-    function playHeroAudio() {
-      if (bgPlayer && bgPlayer.unMute) {
-        bgPlayer.unMute();
-        bgPlayer.setVolume(100);
-        bgPlayer.seekTo(0);
-        bgPlayer.playVideo();
-        heroSection.classList.add('playing');
-      }
+    function closeVideoModal(e) {
+      if (e && e.target !== e.currentTarget && !e.target.classList.contains('video-modal-close')) return;
+      var modal = document.getElementById('videoModal');
+      var iframe = document.getElementById('modalIframe');
+      iframe.src = '';
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
     }
 
-    // Close — mute and restore overlay
-    function muteHero() {
-      if (bgPlayer && bgPlayer.mute) {
-        bgPlayer.mute();
-        heroSection.classList.remove('playing');
-      }
-    }
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeVideoModal();
+    });
 
     // Fade-in on scroll
     var observer = new IntersectionObserver(function(entries) {
