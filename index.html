@@ -320,6 +320,81 @@
       filter: grayscale(10%);
     }
 
+    /* ═══ FUTURE VIBRANT SELF ═══ */
+    .fvs { background: var(--warm-white); }
+
+    .fvs-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .fvs-logo {
+      flex-shrink: 0;
+      width: 140px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .fvs-copy { flex: 1; }
+
+    .fvs-copy h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 400;
+      margin-bottom: 1.2rem;
+      line-height: 1.3;
+    }
+
+    .fvs-copy p {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .fvs-copy p:last-of-type { margin-bottom: 0; }
+
+    .fvs-tagline {
+      display: block;
+      margin-top: 1.5rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bronze);
+    }
+
+    .fvs-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding: 0.8rem 1.8rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--text);
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .fvs-cta:hover { background: var(--bronze); }
+
+    @media (max-width: 768px) {
+      .fvs-inner { flex-direction: column; align-items: center; text-align: center; }
+      .fvs-logo { width: 100px; }
+    }
+
     /* ═══ TILE GRID (shared by Films + Read) ═══ */
     .tile-grid {
       display: grid;
@@ -643,6 +718,7 @@
       </button>
       <ul class="nav-links">
         <li><a href="#bio">Biography</a></li>
+        <li><a href="#fvs">The Work</a></li>
         <li><a href="#films">Short Films</a></li>
         <li><a href="#read">Read</a></li>
         <li><a href="#footprints">Digital Footprints</a></li>
@@ -698,6 +774,21 @@
       </div>
 
       <img src="Headshot.jpg" alt="Frank Reina" class="bio-headshot" onerror="this.style.display='none'">
+    </div>
+  </section>
+
+  <!-- ════ FUTURE VIBRANT SELF ════ -->
+  <section class="fvs" id="fvs">
+    <div class="fvs-inner fade-in">
+      <img src="FUTURE_VIBRANT_SELF_Logo.png" alt="Future Vibrant Self" class="fvs-logo" onerror="this.style.display='none'">
+      <div class="fvs-copy">
+        <h2>Future Vibrant Self</h2>
+        <p>I built a framework called Future Vibrant Self. You take the story of your greatest struggle, frame a narrative from beginning to end, and that story becomes a road map for others now walking through what you've already survived.</p>
+        <p>Vibrant is a state in which your thoughts, words, emotions, attitude and actions are lined up toward one purpose. I help people get into that state.</p>
+        <p>Your story is your value.</p>
+        <span class="fvs-tagline">Vibe free, quest hard.</span>
+        <a href="https://www.futurevibrantself.com" target="_blank" rel="noopener" class="fvs-cta">Learn more &rarr;</a>
+      </div>
     </div>
   </section>
 
