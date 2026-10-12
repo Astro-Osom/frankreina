@@ -11,7 +11,7 @@
   <meta property="og:url" content="https://www.frankreina.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=EB+Garamond:wght@400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -434,6 +434,17 @@
 
     /* Film-specific */
     .trailer-grid .tile-img { aspect-ratio: 16/9; } /* widescreen: also trims sddefault letterbox exactly */
+    /* Trailer labels: match the "Official Trailer" lettering burned into the FVS thumbnail
+       (EB Garamond, cap height 8.3% of frame, 3.75% from left, baseline 7.5% from bottom, #FEFAEC, no fade) */
+    .trailer-grid .film-tile { container-type: inline-size; }
+    .trailer-grid .film-overlay-text {
+      left: 3.75cqw; right: auto; bottom: 3.15cqw;
+      padding: 0; background: none;
+      font-family: 'EB Garamond', Georgia, serif; font-weight: 400;
+      font-size: 6.9cqw; line-height: 1; letter-spacing: 0;
+      color: #FEFAEC; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+      white-space: nowrap;
+    }
     .tile-grid.trailer-grid { grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
     @media (max-width: 600px) { .tile-grid.trailer-grid { grid-template-columns: 1fr; } }
     .films-section { background: var(--warm-white); }
