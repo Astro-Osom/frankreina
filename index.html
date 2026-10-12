@@ -433,6 +433,9 @@
     .tile-body { padding: 0.7rem 0.9rem; }
 
     /* Film-specific */
+    .trailer-grid .tile-img { aspect-ratio: 16/9; } /* widescreen: also trims sddefault letterbox exactly */
+    .tile-grid.trailer-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+    @media (max-width: 600px) { .tile-grid.trailer-grid { grid-template-columns: 1fr; } }
     .films-section { background: var(--warm-white); }
 
     .film-tile { position: relative; }
@@ -719,10 +722,10 @@
       <ul class="nav-links">
         <li><a href="#bio">Biography</a></li>
         <li><a href="#fvs">The Work</a></li>
+        <li><a href="#trailers">Trailers</a></li>
         <li><a href="#films">Short Films</a></li>
         <li><a href="#read">Read</a></li>
         <li><a href="#footprints">Digital Footprints</a></li>
-        <li><a href="#connect">Connect</a></li>
       </ul>
     </div>
   </nav>
@@ -792,18 +795,34 @@
     </div>
   </section>
 
+  <!-- ════ TRAILERS ════ -->
+  <section class="films-section" id="trailers">
+    <div class="container fade-in">
+      <p class="section-label">Trailers</p>
+      <div class="section-divider"></div>
+      <div class="tile-grid trailer-grid">
+
+        <a href="https://youtu.be/yqSFod3LsCA" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/yqSFod3LsCA/sddefault.jpg" alt="Future Vibrant Self trailer" class="tile-img yt-letterbox" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=ex0a9rHFAa0" target="_blank" rel="noopener" class="tile-card film-tile">
+          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/maxresdefault.jpg" alt="Scrambled trailer" class="tile-img" loading="lazy">
+          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+          <span class="film-overlay-text">Scrambled</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ════ SHORT FILMS ════ -->
   <section class="films-section" id="films">
     <div class="container fade-in">
       <p class="section-label">Short Films</p>
       <div class="section-divider"></div>
       <div class="tile-grid">
-
-        <a href="https://www.youtube.com/watch?v=ex0a9rHFAa0" target="_blank" rel="noopener" class="tile-card film-tile">
-          <img src="https://img.youtube.com/vi/ex0a9rHFAa0/maxresdefault.jpg" alt="Scrambled Movie Trailer" class="tile-img" loading="lazy">
-          <div class="tile-play"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
-          <span class="film-overlay-text">Scrambled Trailer</span>
-        </a>
 
         <a href="https://www.youtube.com/watch?v=7NQG56d5IfI" target="_blank" rel="noopener" class="tile-card film-tile">
           <img src="https://img.youtube.com/vi/7NQG56d5IfI/maxresdefault.jpg" alt="Key Nuts" class="tile-img" loading="lazy">
@@ -960,22 +979,6 @@
     </div>
   </section>
 
-  <!-- ════ SIGNUP ════ -->
-  <section class="signup" id="connect">
-    <div class="container fade-in">
-      <h2>Stay in the loop</h2>
-      <p class="subtitle">Get notified when Scrambled drops, a new video message comes out, or Future Vibrant Self launches.</p>
-      <form class="signup-form" action="https://formspree.io/f/xreaoeod" method="POST">
-        <div class="form-row">
-          <input type="text" name="firstName" placeholder="First name" required>
-          <input type="text" name="lastName" placeholder="Last name" required>
-        </div>
-        <input type="email" name="email" placeholder="Email address" required>
-        <button type="submit">Keep me posted</button>
-      </form>
-    </div>
-  </section>
-
   <!-- ════ FOOTER ════ -->
   <footer>
     <div class="footer-inner">
@@ -986,7 +989,7 @@
 
       <div class="footer-sites">
         <a href="https://www.scrambledmovie.com" target="_blank">scrambledmovie.com</a>
-        <a href="https://www.futurevibrantself.com" target="_blank">futurevibrantself.com</a>
+        <a href="https://fvsmovies.com" target="_blank">fvsmovies.com</a>
       </div>
 
       <div class="footer-socials">
